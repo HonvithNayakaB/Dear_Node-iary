@@ -67,7 +67,7 @@ export const BookSpread: React.FC<BookSpreadProps> = ({
   if (!currentNode) {
     return (
       <div className="flex-1 flex items-center justify-center p-6">
-        <div className="text-center p-10 bg-white/80 backdrop-blur-md rounded-3xl shadow-xl border-4 border-pink-100 max-w-md">
+        <div className="text-center p-10 bg-white/80 backdrop-blur-md rounded-3xl shadow-xl border-4 border-accent-200 max-w-md">
           <div className="text-6xl mb-4">📖🌸</div>
           <h2 className="font-patrick text-3xl text-gray-800 mb-2">Your Diary is Waiting...</h2>
           <p className="font-quicksand text-sm text-gray-500 mb-6">
@@ -75,7 +75,7 @@ export const BookSpread: React.FC<BookSpreadProps> = ({
           </p>
           <button
             onClick={onOpenAddModal}
-            className="px-6 py-3 bg-gradient-to-r from-pink-400 to-rose-400 hover:from-pink-500 hover:to-rose-500 text-white font-quicksand font-bold text-sm rounded-full shadow-lg shadow-pink-200 transition-transform active:scale-95"
+            className="px-6 py-3 bg-gradient-to-r from-accent-400 to-accent-600 hover:from-accent-500 hover:to-accent-700 text-white font-quicksand font-bold text-sm rounded-full shadow-lg shadow-accent-200 transition-transform active:scale-95"
           >
             Write First Memory 🌸
           </button>
@@ -88,7 +88,6 @@ export const BookSpread: React.FC<BookSpreadProps> = ({
   const photos = entry.photos || [];
   const currentPhoto = photos[activePhotoIndex] || photos[0];
 
-  // Paper and font classes from user preferences
   const paperClass =
     preferences.paperStyle === 'dotted'
       ? 'paper-dotted'
@@ -121,7 +120,7 @@ export const BookSpread: React.FC<BookSpreadProps> = ({
       <button
         onClick={onPrev}
         title="Previous Memory (node.prev)"
-        className="absolute -left-3 sm:-left-6 z-20 group p-3 bg-white/90 hover:bg-pink-50 text-pink-600 rounded-full shadow-xl border-2 border-pink-200 transition-all hover:scale-110 active:scale-95"
+        className="absolute -left-3 sm:-left-6 z-20 group p-3 bg-white/90 hover:bg-accent-50 text-accent-600 rounded-full shadow-xl border-2 border-accent-200 transition-all hover:scale-110 active:scale-95 duration-200"
       >
         <ChevronLeft size={24} className="group-hover:-translate-x-0.5 transition-transform" />
       </button>
@@ -130,34 +129,34 @@ export const BookSpread: React.FC<BookSpreadProps> = ({
       <button
         onClick={onNext}
         title="Next Memory (node.next)"
-        className="absolute -right-3 sm:-right-6 z-20 group p-3 bg-white/90 hover:bg-pink-50 text-pink-600 rounded-full shadow-xl border-2 border-pink-200 transition-all hover:scale-110 active:scale-95"
+        className="absolute -right-3 sm:-right-6 z-20 group p-3 bg-white/90 hover:bg-accent-50 text-accent-600 rounded-full shadow-xl border-2 border-accent-200 transition-all hover:scale-110 active:scale-95 duration-200"
       >
         <ChevronRight size={24} className="group-hover:translate-x-0.5 transition-transform" />
       </button>
 
-      {/* The Open 2-Page Book Container */}
-      <div className="w-full bg-[#f6eee3] p-3 sm:p-5 rounded-[36px] shadow-book border-8 border-[#dfceb9] relative overflow-hidden">
+      {/* The Open 2-Page Book Container with Theme Cover & Stitching */}
+      <div className="w-full bg-book-cover p-3 sm:p-5 rounded-[36px] shadow-book border-8 border-book-border relative overflow-hidden transition-colors duration-500">
         {/* Book Cover Edge Stitching Visuals */}
-        <div className="absolute inset-2 border-2 border-dashed border-[#cbba9e] rounded-[28px] pointer-events-none opacity-60" />
+        <div className="absolute inset-2 border-2 border-dashed border-book-stitch rounded-[28px] pointer-events-none opacity-70 transition-colors duration-500" />
 
         {/* 2 Pages Spread */}
-        <div className="grid grid-cols-1 md:grid-cols-2 rounded-[24px] overflow-hidden shadow-2xl bg-[#fffdf9] min-h-[580px] sm:min-h-[640px] relative">
+        <div className="grid grid-cols-1 md:grid-cols-2 rounded-[24px] overflow-hidden shadow-2xl bg-book-page text-book-text min-h-[580px] sm:min-h-[640px] relative transition-colors duration-500">
           
           {/* ================= LEFT PAGE: Scrapbook, Polaroids & Mood ================= */}
-          <div className="book-left-spine p-6 sm:p-8 flex flex-col justify-between border-b md:border-b-0 md:border-r border-[#ebdcc8] bg-gradient-to-br from-[#fffefc] to-[#fbf8f2] relative">
+          <div className="book-left-spine p-6 sm:p-8 flex flex-col justify-between border-b md:border-b-0 md:border-r border-accent-200/40 relative">
             
             {/* Top Date Header & Favorite */}
             <div>
-              <div className="flex items-center justify-between pb-3 border-b border-pink-100/80">
+              <div className="flex items-center justify-between pb-3 border-b border-accent-100">
                 <div className="flex items-center gap-2">
-                  <span className="p-1.5 bg-pink-100 text-pink-600 rounded-xl">
+                  <span className="p-1.5 bg-accent-100 text-accent-700 rounded-xl transition-colors duration-300">
                     <Calendar size={16} />
                   </span>
                   <div>
-                    <div className="font-patrick text-xl font-bold text-gray-800">
+                    <div className="font-patrick text-xl font-bold">
                       {entry.date}
                     </div>
-                    <div className="text-[11px] font-quicksand text-gray-400 flex items-center gap-1">
+                    <div className="text-[11px] font-quicksand opacity-60 flex items-center gap-1">
                       <Clock size={11} /> {entry.time || '12:00 PM'}
                     </div>
                   </div>
@@ -173,7 +172,7 @@ export const BookSpread: React.FC<BookSpreadProps> = ({
                     className={`p-2 rounded-full transition-transform active:scale-90 ${
                       entry.isFavorite
                         ? 'text-rose-500 bg-rose-50 shadow-sm'
-                        : 'text-gray-300 hover:text-rose-400 hover:bg-gray-50'
+                        : 'opacity-40 hover:opacity-100 hover:text-rose-400 hover:bg-accent-50'
                     }`}
                   >
                     <Heart size={20} fill={entry.isFavorite ? 'currentColor' : 'none'} />
@@ -183,10 +182,10 @@ export const BookSpread: React.FC<BookSpreadProps> = ({
 
               {/* Mood & Weather Badges */}
               <div className="flex flex-wrap items-center gap-2 mt-4">
-                <span className="px-3 py-1 bg-pink-50 border border-pink-200 text-pink-700 rounded-full text-xs font-quicksand font-semibold shadow-xs">
+                <span className="px-3 py-1 bg-accent-50 border border-accent-200 text-accent-700 rounded-full text-xs font-quicksand font-semibold shadow-xs transition-colors duration-300">
                   {MOOD_EMOJIS[entry.mood] || '😊 Happy'}
                 </span>
-                <span className="px-3 py-1 bg-amber-50 border border-amber-200 text-amber-700 rounded-full text-xs font-quicksand font-semibold shadow-xs">
+                <span className="px-3 py-1 bg-accent-50/60 border border-accent-200/80 text-accent-700 rounded-full text-xs font-quicksand font-semibold shadow-xs transition-colors duration-300">
                   {WEATHER_EMOJIS[entry.weather] || '☀️ Sunny'}
                 </span>
               </div>
@@ -196,7 +195,7 @@ export const BookSpread: React.FC<BookSpreadProps> = ({
             <div className="my-6 flex-1 flex flex-col items-center justify-center">
               {currentPhoto ? (
                 <div className="relative group w-full max-w-[280px]">
-                  {/* Decorative Washi Tape */}
+                  {/* Decorative Washi Tape (Styled dynamically by theme in CSS) */}
                   <div className="washi-tape" />
 
                   {/* Polaroid Card */}
@@ -233,8 +232,8 @@ export const BookSpread: React.FC<BookSpreadProps> = ({
                           }}
                           className={`w-2.5 h-2.5 rounded-full transition-all ${
                             activePhotoIndex === idx
-                              ? 'bg-pink-500 scale-125 ring-2 ring-pink-200'
-                              : 'bg-gray-300 hover:bg-pink-300'
+                              ? 'bg-accent-500 scale-125 ring-2 ring-accent-200'
+                              : 'bg-gray-300 hover:bg-accent-300'
                           }`}
                         />
                       ))}
@@ -245,13 +244,13 @@ export const BookSpread: React.FC<BookSpreadProps> = ({
                 /* Empty Photo Placeholder with scrapbook look */
                 <div
                   onClick={() => onEdit(entry)}
-                  className="w-full max-w-[280px] p-6 rounded-2xl border-2 border-dashed border-pink-200 bg-pink-50/30 hover:bg-pink-50/60 text-center cursor-pointer transition-colors flex flex-col items-center justify-center group"
+                  className="w-full max-w-[280px] p-6 rounded-2xl border-2 border-dashed border-accent-200 bg-accent-50/40 hover:bg-accent-50/80 text-center cursor-pointer transition-colors flex flex-col items-center justify-center group duration-300"
                 >
-                  <span className="p-3 bg-pink-100 text-pink-500 rounded-full mb-3 group-hover:scale-110 transition-transform">
+                  <span className="p-3 bg-accent-100 text-accent-600 rounded-full mb-3 group-hover:scale-110 transition-transform">
                     <Camera size={22} />
                   </span>
-                  <span className="font-patrick text-lg text-gray-700">Add a Polaroid Snapshot</span>
-                  <span className="font-quicksand text-xs text-gray-400 mt-1">
+                  <span className="font-patrick text-lg">Add a Polaroid Snapshot</span>
+                  <span className="font-quicksand text-xs opacity-60 mt-1">
                     Click to attach photos or snap a photo with your webcam!
                   </span>
                 </div>
@@ -259,7 +258,7 @@ export const BookSpread: React.FC<BookSpreadProps> = ({
             </div>
 
             {/* Bottom Scrapbook Stickers & Page Number Footer */}
-            <div className="pt-3 border-t border-pink-100/60 flex items-center justify-between text-xs font-quicksand text-gray-400">
+            <div className="pt-3 border-t border-accent-100/60 flex items-center justify-between text-xs font-quicksand opacity-70">
               <div className="flex items-center gap-1.5">
                 {entry.stickers && entry.stickers.length > 0 ? (
                   entry.stickers.map((stk) => (
@@ -272,7 +271,7 @@ export const BookSpread: React.FC<BookSpreadProps> = ({
                 )}
               </div>
 
-              <div className="text-[11px] font-semibold text-gray-400">
+              <div className="text-[11px] font-semibold">
                 Page {currentIndex * 2 + 1}
               </div>
             </div>
@@ -287,42 +286,42 @@ export const BookSpread: React.FC<BookSpreadProps> = ({
           >
             {/* Top Memory Ribbon & Loop Info */}
             <div>
-              <div className="flex items-center justify-between pb-2 border-b border-pink-100/50 text-xs font-quicksand">
-                <div className="flex items-center gap-1.5 text-pink-600 font-semibold">
+              <div className="flex items-center justify-between pb-2 border-b border-accent-100/50 text-xs font-quicksand">
+                <div className="flex items-center gap-1.5 text-accent-600 font-semibold">
                   <Sparkles size={14} />
                   <span>
                     Memory {currentIndex + 1} of {totalCount}
                   </span>
                 </div>
 
-                <div className="flex items-center gap-1 text-[11px] text-gray-400">
-                  <LinkIcon size={12} className="text-pink-400" />
+                <div className="flex items-center gap-1 text-[11px] opacity-60">
+                  <LinkIcon size={12} className="text-accent-500" />
                   <span>Loops to next memory</span>
                 </div>
               </div>
 
               {/* Journal Entry Title */}
-              <h1 className="mt-4 font-patrick text-3xl sm:text-4xl text-gray-800 tracking-wide leading-tight">
+              <h1 className="mt-4 font-patrick text-3xl sm:text-4xl tracking-wide leading-tight">
                 {entry.title || 'Untitled Reflection'}
               </h1>
 
               {/* Journal Body Content */}
               <div
-                className={`mt-4 ${fontClass} text-xl sm:text-2xl text-gray-700 whitespace-pre-wrap leading-relaxed max-h-[340px] overflow-y-auto pr-2`}
+                className={`mt-4 ${fontClass} text-xl sm:text-2xl whitespace-pre-wrap leading-relaxed max-h-[340px] overflow-y-auto pr-2 opacity-90`}
               >
                 {entry.content}
               </div>
             </div>
 
             {/* Bottom Tags, Action Buttons & Page Number */}
-            <div className="mt-6 pt-4 border-t border-pink-100/80">
+            <div className="mt-6 pt-4 border-t border-accent-100/80">
               {/* Tags */}
               {entry.tags && entry.tags.length > 0 && (
                 <div className="flex flex-wrap gap-1.5 mb-4">
                   {entry.tags.map((tag) => (
                     <span
                       key={tag}
-                      className="text-xs px-2.5 py-0.5 bg-pink-100/70 text-pink-700 rounded-full font-quicksand flex items-center gap-1"
+                      className="text-xs px-2.5 py-0.5 bg-accent-100/80 text-accent-700 rounded-full font-quicksand flex items-center gap-1 transition-colors duration-300"
                     >
                       <Tag size={10} />
                       #{tag}
@@ -337,7 +336,7 @@ export const BookSpread: React.FC<BookSpreadProps> = ({
                   <button
                     onClick={() => onEdit(entry)}
                     title="Edit Memory (Update & Chronologically Reorder)"
-                    className="p-2 rounded-xl text-gray-500 hover:text-pink-600 hover:bg-pink-100/60 transition-colors flex items-center gap-1 text-xs font-quicksand font-semibold"
+                    className="p-2 rounded-xl text-gray-500 hover:text-accent-700 hover:bg-accent-100/70 transition-colors flex items-center gap-1 text-xs font-quicksand font-semibold"
                   >
                     <Edit3 size={15} /> Edit
                   </button>
@@ -359,7 +358,7 @@ export const BookSpread: React.FC<BookSpreadProps> = ({
                   </button>
                 </div>
 
-                <div className="text-[11px] font-semibold font-quicksand text-gray-400">
+                <div className="text-[11px] font-semibold font-quicksand opacity-60">
                   Page {currentIndex * 2 + 2}
                 </div>
               </div>

@@ -32,7 +32,6 @@ export const CdllVisualizer: React.FC<CdllVisualizerProps> = ({
   onToggle,
   onSelectNode,
 }) => {
-  // Collect all nodes in array form for visual rendering
   const nodes: DiaryNode<DiaryEntry>[] = [];
   if (head && size > 0) {
     let curr = head;
@@ -57,21 +56,21 @@ export const CdllVisualizer: React.FC<CdllVisualizerProps> = ({
       <div className="flex justify-center">
         <button
           onClick={onToggle}
-          className="px-6 py-2 bg-white/95 backdrop-blur-md rounded-t-2xl shadow-lg border-t-2 border-x-2 border-pink-200 text-pink-600 font-quicksand font-bold text-xs flex items-center gap-2 hover:bg-pink-50 transition-colors"
+          className="px-6 py-2 bg-white/95 backdrop-blur-md rounded-t-2xl shadow-lg border-t-2 border-x-2 border-accent-200 text-accent-700 font-quicksand font-bold text-xs flex items-center gap-2 hover:bg-accent-50 transition-colors duration-300"
         >
-          <GitCommit size={16} className="text-pink-500 animate-spin-slow" />
+          <GitCommit size={16} className="text-accent-500 animate-spin-slow" />
           <span>Under The Hood: Circular Doubly Linked List Inspector</span>
           {isOpen ? <ChevronDown size={14} /> : <ChevronUp size={14} />}
         </button>
       </div>
 
       {/* Main Drawer Body */}
-      <div className="bg-white/95 backdrop-blur-xl border-t-2 border-pink-200 shadow-2xl p-4 sm:p-5 text-gray-800">
+      <div className="bg-white/95 backdrop-blur-xl border-t-2 border-accent-200 shadow-2xl p-4 sm:p-5 text-gray-800 transition-colors duration-300">
         <div className="max-w-6xl mx-auto space-y-4">
           {/* Header Stats & Algorithm Legend */}
           <div className="flex flex-wrap items-center justify-between gap-3 text-xs font-quicksand">
             <div className="flex items-center gap-3">
-              <span className="px-2.5 py-1 bg-pink-100 text-pink-700 rounded-full font-semibold">
+              <span className="px-2.5 py-1 bg-accent-100 text-accent-800 rounded-full font-semibold transition-colors duration-300">
                 Size: {size} {size === 1 ? 'Node' : 'Nodes'}
               </span>
               {head && (
@@ -88,7 +87,7 @@ export const CdllVisualizer: React.FC<CdllVisualizerProps> = ({
 
             <div className="flex items-center gap-4 text-gray-500 text-[11px]">
               <span className="flex items-center gap-1">
-                <span className="w-2.5 h-2.5 rounded-full bg-pink-500 inline-block" />
+                <span className="w-2.5 h-2.5 rounded-full bg-accent-500 inline-block transition-colors duration-300" />
                 Active Node
               </span>
               <span className="flex items-center gap-1">
@@ -100,7 +99,7 @@ export const CdllVisualizer: React.FC<CdllVisualizerProps> = ({
                 Tail
               </span>
               <span className="flex items-center gap-1">
-                <Link size={12} className="text-pink-400" />
+                <Link size={12} className="text-accent-500" />
                 Circular Pointer Loop
               </span>
             </div>
@@ -124,10 +123,10 @@ export const CdllVisualizer: React.FC<CdllVisualizerProps> = ({
                       {/* Node Card / Charm */}
                       <button
                         onClick={() => handleNodeClick(node)}
-                        className={`relative group px-4 py-3 rounded-2xl border-2 transition-all flex flex-col items-center text-center ${
+                        className={`relative group px-4 py-3 rounded-2xl border-2 transition-all flex flex-col items-center text-center duration-300 ${
                           isActive
-                            ? 'bg-gradient-to-b from-pink-50 to-rose-100 border-pink-500 shadow-lg shadow-pink-200 scale-105 ring-2 ring-pink-400'
-                            : 'bg-white border-gray-200 hover:border-pink-300 hover:bg-pink-50/40 shadow-sm'
+                            ? 'bg-gradient-to-b from-accent-50 to-accent-100 border-accent-500 shadow-lg shadow-accent-200 scale-105 ring-2 ring-accent-400'
+                            : 'bg-white border-gray-200 hover:border-accent-300 hover:bg-accent-50/50 shadow-sm'
                         }`}
                       >
                         {/* Status Badges */}
@@ -157,7 +156,7 @@ export const CdllVisualizer: React.FC<CdllVisualizerProps> = ({
 
                         {/* Active Reading Marker */}
                         {isActive && (
-                          <div className="absolute -top-3 bg-pink-500 text-white text-[9px] font-bold px-2 py-0.5 rounded-full shadow flex items-center gap-1">
+                          <div className="absolute -top-3 bg-accent-500 text-white text-[9px] font-bold px-2 py-0.5 rounded-full shadow flex items-center gap-1 transition-colors duration-300">
                             <Sparkles size={10} /> Reading
                           </div>
                         )}
@@ -165,13 +164,13 @@ export const CdllVisualizer: React.FC<CdllVisualizerProps> = ({
 
                       {/* Bidirectional Pointer Arrows between nodes */}
                       {index < nodes.length - 1 && (
-                        <div className="flex flex-col items-center justify-center text-pink-400 px-1">
-                          <div className="flex items-center text-[10px] font-mono text-gray-400 gap-0.5">
-                            <ArrowRight size={14} className="text-pink-400" />
+                        <div className="flex flex-col items-center justify-center text-accent-500 px-1 transition-colors duration-300">
+                          <div className="flex items-center text-[10px] font-mono gap-0.5">
+                            <ArrowRight size={14} className="text-accent-500" />
                           </div>
-                          <div className="w-8 h-[2px] bg-gradient-to-r from-pink-300 via-rose-300 to-pink-300 my-0.5" />
-                          <div className="flex items-center text-[10px] font-mono text-gray-400 gap-0.5">
-                            <ArrowLeft size={14} className="text-pink-400" />
+                          <div className="w-8 h-[2px] bg-gradient-to-r from-accent-300 via-accent-400 to-accent-300 my-0.5 transition-colors duration-300" />
+                          <div className="flex items-center text-[10px] font-mono gap-0.5">
+                            <ArrowLeft size={14} className="text-accent-500" />
                           </div>
                         </div>
                       )}
@@ -181,15 +180,15 @@ export const CdllVisualizer: React.FC<CdllVisualizerProps> = ({
 
                 {/* Circular Wrap Ribbon linking Tail back to Head */}
                 {nodes.length > 1 && (
-                  <div className="flex flex-col items-center justify-center px-3 py-1 bg-pink-100/60 rounded-xl border border-dashed border-pink-300 text-pink-700 text-[11px] font-quicksand">
+                  <div className="flex flex-col items-center justify-center px-3 py-1 bg-accent-100/70 rounded-xl border border-dashed border-accent-300 text-accent-800 text-[11px] font-quicksand transition-colors duration-300">
                     <div className="flex items-center gap-1 font-semibold">
                       <Link size={12} />
                       <span>Circular Loop</span>
                     </div>
-                    <span className="text-[10px] text-pink-600">
+                    <span className="text-[10px] text-accent-700">
                       tail.next → head
                     </span>
-                    <span className="text-[10px] text-pink-600">
+                    <span className="text-[10px] text-accent-700">
                       head.prev ← tail
                     </span>
                   </div>
@@ -200,16 +199,16 @@ export const CdllVisualizer: React.FC<CdllVisualizerProps> = ({
 
           {/* Active Node Pointer Inspector Details */}
           {currentNode && (
-            <div className="bg-pink-50/50 rounded-2xl p-3 border border-pink-100 flex flex-wrap items-center justify-between gap-3 text-xs font-quicksand">
-              <div className="flex items-center gap-2 text-gray-600">
-                <Info size={14} className="text-pink-500" />
+            <div className="bg-accent-50/50 rounded-2xl p-3 border border-accent-200/60 flex flex-wrap items-center justify-between gap-3 text-xs font-quicksand transition-colors duration-300">
+              <div className="flex items-center gap-2 text-gray-700">
+                <Info size={14} className="text-accent-500" />
                 <span>
                   <strong>Active Node Pointers:</strong> prev points to{' '}
-                  <span className="text-pink-600 font-semibold underline decoration-pink-300">
+                  <span className="text-accent-700 font-semibold underline decoration-accent-300">
                     [{currentNode.prev.data.date} {currentNode.prev.data.time}]
                   </span>
                   , next points to{' '}
-                  <span className="text-pink-600 font-semibold underline decoration-pink-300">
+                  <span className="text-accent-700 font-semibold underline decoration-accent-300">
                     [{currentNode.next.data.date} {currentNode.next.data.time}]
                   </span>
                 </span>

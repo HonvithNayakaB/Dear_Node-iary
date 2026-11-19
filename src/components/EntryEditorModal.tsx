@@ -44,8 +44,6 @@ const WEATHERS: { type: WeatherType; label: string; icon: string }[] = [
   { type: 'night', label: 'Clear Night', icon: '🌙' },
 ];
 
-const STICKER_PALETTE = ['🌸', '✨', '🌿', '💖', '☕', '🎀', '⭐', '🐾', '🍰', '🍓', '🧸', '🌈'];
-
 export const EntryEditorModal: React.FC<EntryEditorModalProps> = ({
   isOpen,
   onClose,
@@ -115,7 +113,7 @@ export const EntryEditorModal: React.FC<EntryEditorModalProps> = ({
             id: 'photo-' + Date.now() + '-' + Math.random().toString(36).substr(2, 4),
             dataUrl,
             caption: '',
-            rotation: (Math.random() - 0.5) * 8, // slight tilt between -4 and +4
+            rotation: (Math.random() - 0.5) * 8,
             timestamp: Date.now(),
           };
           setPhotos((prev) => [...prev, newPhoto]);
@@ -167,19 +165,17 @@ export const EntryEditorModal: React.FC<EntryEditorModalProps> = ({
 
     soundEffects.playSaveChime();
 
-    // Trigger celebratory confetti
+    // Trigger celebratory confetti matching active theme
     confetti({
       particleCount: 50,
       spread: 60,
       origin: { y: 0.6 },
-      colors: ['#fda4b8', '#f43f6e', '#a6bea6', '#c6bfe4', '#f5efe6'],
     });
 
     const now = Date.now();
     const entryDate = date || new Date().toISOString().slice(0, 10);
     const entryTime = time || new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true });
 
-    // Build timestamp from date and time
     const dateTimeParsed = new Date(`${entryDate} ${entryTime}`);
     const createdAt = initialEntry?.createdAt || (!isNaN(dateTimeParsed.getTime()) ? dateTimeParsed.getTime() : now);
 
@@ -207,18 +203,18 @@ export const EntryEditorModal: React.FC<EntryEditorModalProps> = ({
   return (
     <>
       <div className="fixed inset-0 z-40 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4 overflow-y-auto">
-        <div className="relative w-full max-w-2xl bg-sakura-50/95 backdrop-blur-md rounded-3xl shadow-2xl border-4 border-white p-6 my-8 max-h-[90vh] overflow-y-auto flex flex-col">
+        <div className="relative w-full max-w-2xl bg-white rounded-3xl shadow-2xl border-4 border-accent-200 p-6 my-8 max-h-[90vh] overflow-y-auto flex flex-col transition-colors duration-300">
           {/* Header */}
-          <div className="flex items-center justify-between pb-4 border-b border-pink-100">
+          <div className="flex items-center justify-between pb-4 border-b border-accent-100">
             <div className="flex items-center gap-2">
-              <span className="text-2xl">🌸</span>
+              <span className="text-2xl">📖</span>
               <h2 className="font-patrick text-3xl text-gray-800">
                 {initialEntry ? 'Edit Memory' : 'Dear Node-iary, Today...'}
               </h2>
             </div>
             <button
               onClick={onClose}
-              className="p-2 text-gray-400 hover:text-gray-600 rounded-full hover:bg-white/80 transition-colors"
+              className="p-2 text-gray-400 hover:text-gray-600 rounded-full hover:bg-gray-100 transition-colors"
             >
               <X size={22} />
             </button>
@@ -226,10 +222,10 @@ export const EntryEditorModal: React.FC<EntryEditorModalProps> = ({
 
           <form onSubmit={handleSubmit} className="mt-5 space-y-5 flex-1">
             {/* Date & Time Selector */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 bg-white/70 p-4 rounded-2xl border border-pink-100 shadow-sm">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 bg-accent-50/40 p-4 rounded-2xl border border-accent-100 shadow-sm transition-colors duration-300">
               <div>
                 <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1 flex items-center gap-1.5">
-                  <Calendar size={14} className="text-pink-500" />
+                  <Calendar size={14} className="text-accent-500" />
                   Memory Date
                 </label>
                 <input
@@ -237,13 +233,13 @@ export const EntryEditorModal: React.FC<EntryEditorModalProps> = ({
                   value={date}
                   onChange={(e) => setDate(e.target.value)}
                   required
-                  className="w-full px-3 py-2 bg-pink-50/50 rounded-xl border border-pink-200 text-gray-700 text-sm focus:outline-none focus:ring-2 focus:ring-pink-300 font-quicksand"
+                  className="w-full px-3 py-2 bg-white rounded-xl border border-accent-200 text-gray-700 text-sm focus:outline-none focus:ring-2 focus:ring-accent-300 font-quicksand"
                 />
               </div>
 
               <div>
                 <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1 flex items-center gap-1.5">
-                  <Clock size={14} className="text-pink-500" />
+                  <Clock size={14} className="text-accent-500" />
                   Time / Part
                 </label>
                 <input
@@ -251,16 +247,16 @@ export const EntryEditorModal: React.FC<EntryEditorModalProps> = ({
                   placeholder="e.g. 10:30 AM or Morning"
                   value={time}
                   onChange={(e) => setTime(e.target.value)}
-                  className="w-full px-3 py-2 bg-pink-50/50 rounded-xl border border-pink-200 text-gray-700 text-sm focus:outline-none focus:ring-2 focus:ring-pink-300 font-quicksand"
+                  className="w-full px-3 py-2 bg-white rounded-xl border border-accent-200 text-gray-700 text-sm focus:outline-none focus:ring-2 focus:ring-accent-300 font-quicksand"
                 />
               </div>
             </div>
 
             {/* Mood & Weather Pills */}
-            <div className="space-y-3 bg-white/70 p-4 rounded-2xl border border-pink-100 shadow-sm">
+            <div className="space-y-3 bg-accent-50/40 p-4 rounded-2xl border border-accent-100 shadow-sm transition-colors duration-300">
               <div>
                 <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2 flex items-center gap-1.5">
-                  <Smile size={14} className="text-pink-500" />
+                  <Smile size={14} className="text-accent-500" />
                   Today's Mood
                 </label>
                 <div className="flex flex-wrap gap-2">
@@ -274,7 +270,7 @@ export const EntryEditorModal: React.FC<EntryEditorModalProps> = ({
                       }}
                       className={`px-3 py-1.5 rounded-full text-xs font-medium flex items-center gap-1.5 transition-all ${
                         mood === m.type
-                          ? 'ring-2 ring-pink-500 scale-105 shadow-sm font-semibold ' + m.color
+                          ? 'ring-2 ring-accent-500 scale-105 shadow-sm font-semibold ' + m.color
                           : 'bg-white hover:bg-gray-50 text-gray-600 border border-gray-200'
                       }`}
                     >
@@ -285,9 +281,9 @@ export const EntryEditorModal: React.FC<EntryEditorModalProps> = ({
                 </div>
               </div>
 
-              <div className="pt-2 border-t border-pink-50">
+              <div className="pt-2 border-t border-accent-100/60">
                 <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2 flex items-center gap-1.5">
-                  <CloudSun size={14} className="text-pink-500" />
+                  <CloudSun size={14} className="text-accent-500" />
                   Weather
                 </label>
                 <div className="flex flex-wrap gap-2">
@@ -301,7 +297,7 @@ export const EntryEditorModal: React.FC<EntryEditorModalProps> = ({
                       }}
                       className={`px-3 py-1 rounded-full text-xs font-medium flex items-center gap-1.5 transition-all ${
                         weather === w.type
-                          ? 'bg-pink-100 text-pink-700 ring-2 ring-pink-400 font-semibold'
+                          ? 'bg-accent-100 text-accent-700 ring-2 ring-accent-400 font-semibold'
                           : 'bg-white hover:bg-gray-50 text-gray-600 border border-gray-200'
                       }`}
                     >
@@ -314,13 +310,13 @@ export const EntryEditorModal: React.FC<EntryEditorModalProps> = ({
             </div>
 
             {/* Title & Content */}
-            <div className="space-y-2 bg-white/90 p-4 rounded-2xl border border-pink-100 shadow-sm">
+            <div className="space-y-2 bg-accent-50/20 p-4 rounded-2xl border border-accent-100 shadow-sm transition-colors duration-300">
               <input
                 type="text"
                 placeholder="Give this memory a cute title..."
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
-                className="w-full px-4 py-2 font-patrick text-2xl text-gray-800 placeholder-gray-400 bg-transparent border-b border-pink-100 focus:outline-none focus:border-pink-400"
+                className="w-full px-4 py-2 font-patrick text-2xl text-gray-800 placeholder-gray-400 bg-transparent border-b border-accent-100 focus:outline-none focus:border-accent-400"
               />
 
               <textarea
@@ -328,26 +324,26 @@ export const EntryEditorModal: React.FC<EntryEditorModalProps> = ({
                 rows={6}
                 value={content}
                 onChange={(e) => setContent(e.target.value)}
-                className="w-full p-4 font-caveat text-xl text-gray-700 placeholder-gray-400 bg-amber-50/20 rounded-xl border border-pink-50 focus:outline-none focus:ring-2 focus:ring-pink-300 resize-none leading-relaxed"
+                className="w-full p-4 font-caveat text-xl text-gray-700 placeholder-gray-400 bg-white rounded-xl border border-accent-100 focus:outline-none focus:ring-2 focus:ring-accent-300 resize-none leading-relaxed"
               />
             </div>
 
             {/* Photos & Camera Studio */}
-            <div className="bg-white/70 p-4 rounded-2xl border border-pink-100 shadow-sm space-y-3">
+            <div className="bg-accent-50/40 p-4 rounded-2xl border border-accent-100 shadow-sm space-y-3 transition-colors duration-300">
               <div className="flex items-center justify-between">
                 <label className="text-xs font-semibold text-gray-500 uppercase tracking-wider flex items-center gap-1.5">
-                  <ImageIcon size={14} className="text-pink-500" />
+                  <ImageIcon size={14} className="text-accent-500" />
                   Polaroid Scrapbook Photos ({photos.length})
                 </label>
                 <div className="flex items-center gap-2">
                   <button
                     type="button"
                     onClick={() => setIsCameraOpen(true)}
-                    className="px-3 py-1.5 bg-pink-100 hover:bg-pink-200 text-pink-700 rounded-full text-xs font-medium flex items-center gap-1.5 transition-colors"
+                    className="px-3 py-1.5 bg-accent-100 hover:bg-accent-200 text-accent-700 rounded-full text-xs font-medium flex items-center gap-1.5 transition-colors"
                   >
                     <Camera size={14} /> Snap Polaroid
                   </button>
-                  <label className="px-3 py-1.5 bg-purple-100 hover:bg-purple-200 text-purple-700 rounded-full text-xs font-medium flex items-center gap-1.5 cursor-pointer transition-colors">
+                  <label className="px-3 py-1.5 bg-accent-100 hover:bg-accent-200 text-accent-700 rounded-full text-xs font-medium flex items-center gap-1.5 cursor-pointer transition-colors">
                     <ImageIcon size={14} /> From Gallery
                     <input
                       type="file"
@@ -377,7 +373,7 @@ export const EntryEditorModal: React.FC<EntryEditorModalProps> = ({
                         placeholder="Add caption..."
                         value={photo.caption || ''}
                         onChange={(e) => updatePhotoCaption(photo.id, e.target.value)}
-                        className="mt-1 w-full text-[11px] font-caveat text-gray-600 bg-transparent border-b border-gray-200 focus:outline-none focus:border-pink-400 px-1"
+                        className="mt-1 w-full text-[11px] font-caveat text-gray-600 bg-transparent border-b border-gray-200 focus:outline-none focus:border-accent-400 px-1"
                       />
                       <button
                         type="button"
@@ -397,9 +393,9 @@ export const EntryEditorModal: React.FC<EntryEditorModalProps> = ({
             </div>
 
             {/* Tags */}
-            <div className="bg-white/70 p-4 rounded-2xl border border-pink-100 shadow-sm space-y-2">
+            <div className="bg-accent-50/40 p-4 rounded-2xl border border-accent-100 shadow-sm space-y-2 transition-colors duration-300">
               <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wider flex items-center gap-1.5">
-                <Tag size={14} className="text-pink-500" />
+                <Tag size={14} className="text-accent-500" />
                 Tags
               </label>
               <div className="flex items-center gap-2">
@@ -414,12 +410,12 @@ export const EntryEditorModal: React.FC<EntryEditorModalProps> = ({
                       addTag();
                     }
                   }}
-                  className="flex-1 px-3 py-1.5 bg-pink-50/50 rounded-xl border border-pink-200 text-xs font-quicksand focus:outline-none focus:ring-2 focus:ring-pink-300"
+                  className="flex-1 px-3 py-1.5 bg-white rounded-xl border border-accent-200 text-xs font-quicksand focus:outline-none focus:ring-2 focus:ring-accent-300"
                 />
                 <button
                   type="button"
                   onClick={addTag}
-                  className="px-3 py-1.5 bg-pink-500 hover:bg-pink-600 text-white rounded-xl text-xs font-medium"
+                  className="px-3 py-1.5 bg-accent-500 hover:bg-accent-600 text-white rounded-xl text-xs font-medium transition-colors"
                 >
                   Add
                 </button>
@@ -430,13 +426,13 @@ export const EntryEditorModal: React.FC<EntryEditorModalProps> = ({
                   {tags.map((t) => (
                     <span
                       key={t}
-                      className="px-2.5 py-1 bg-pink-100 text-pink-700 rounded-full text-xs font-quicksand flex items-center gap-1"
+                      className="px-2.5 py-1 bg-accent-100 text-accent-700 rounded-full text-xs font-quicksand flex items-center gap-1 transition-colors duration-300"
                     >
                       #{t}
                       <button
                         type="button"
                         onClick={() => removeTag(t)}
-                        className="hover:text-pink-900"
+                        className="hover:opacity-75"
                       >
                         ×
                       </button>
@@ -451,13 +447,13 @@ export const EntryEditorModal: React.FC<EntryEditorModalProps> = ({
               <button
                 type="button"
                 onClick={onClose}
-                className="px-5 py-2.5 rounded-full border border-gray-200 text-gray-600 font-quicksand text-sm hover:bg-white transition-colors"
+                className="px-5 py-2.5 rounded-full border border-gray-200 text-gray-600 font-quicksand text-sm hover:bg-gray-50 transition-colors"
               >
                 Cancel
               </button>
               <button
                 type="submit"
-                className="px-7 py-2.5 bg-gradient-to-r from-pink-400 to-rose-400 hover:from-pink-500 hover:to-rose-500 text-white rounded-full font-quicksand font-semibold text-sm shadow-md shadow-pink-200 flex items-center gap-2 active:scale-95 transition-all"
+                className="px-7 py-2.5 bg-gradient-to-r from-accent-400 to-accent-600 hover:from-accent-500 hover:to-accent-700 text-white rounded-full font-quicksand font-semibold text-sm shadow-md shadow-accent-200 flex items-center gap-2 active:scale-95 transition-all duration-300"
               >
                 <Save size={16} />
                 Save Memory to CDLL 🌸

@@ -71,11 +71,11 @@ export const SearchCalendarDrawer: React.FC<SearchCalendarDrawerProps> = ({
 
   return (
     <div className="fixed inset-0 z-50 flex justify-end bg-black/40 backdrop-blur-sm">
-      <div className="relative w-full max-w-md bg-white/95 backdrop-blur-xl h-full shadow-2xl flex flex-col border-l-2 border-pink-100 p-6">
+      <div className="relative w-full max-w-md bg-white/95 backdrop-blur-xl h-full shadow-2xl flex flex-col border-l-2 border-accent-100 p-6 transition-colors duration-300">
         {/* Header */}
-        <div className="flex items-center justify-between pb-4 border-b border-pink-100">
+        <div className="flex items-center justify-between pb-4 border-b border-accent-100">
           <div className="flex items-center gap-2">
-            <span className="p-2 bg-pink-100 text-pink-600 rounded-full">
+            <span className="p-2 bg-accent-100 text-accent-700 rounded-full transition-colors duration-300">
               <Search size={18} />
             </span>
             <h3 className="font-patrick text-2xl text-gray-800">Search & Calendar Jump</h3>
@@ -92,9 +92,9 @@ export const SearchCalendarDrawer: React.FC<SearchCalendarDrawerProps> = ({
         <div className="mt-4">
           <button
             onClick={handleRandomShuffle}
-            className="w-full py-2.5 px-4 bg-gradient-to-r from-pink-100 via-rose-100 to-purple-100 hover:from-pink-200 hover:to-purple-200 rounded-2xl border border-pink-200 text-pink-700 font-quicksand font-bold text-xs flex items-center justify-center gap-2 shadow-sm transition-all active:scale-98"
+            className="w-full py-2.5 px-4 bg-gradient-to-r from-accent-100 via-accent-200 to-accent-100 hover:from-accent-200 hover:to-accent-300 rounded-2xl border border-accent-200 text-accent-700 font-quicksand font-bold text-xs flex items-center justify-center gap-2 shadow-sm transition-all active:scale-98 duration-300"
           >
-            <Shuffle size={16} className="text-pink-600" />
+            <Shuffle size={16} className="text-accent-600" />
             <span>Spin Memory Wheel (Time Machine Shuffle) 🎲</span>
           </button>
         </div>
@@ -111,7 +111,7 @@ export const SearchCalendarDrawer: React.FC<SearchCalendarDrawerProps> = ({
               placeholder="Search memories, thoughts, tags..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-9 pr-3 py-2 bg-pink-50/50 rounded-xl border border-pink-100 text-xs text-gray-700 font-quicksand focus:outline-none focus:ring-2 focus:ring-pink-300"
+              className="w-full pl-9 pr-3 py-2 bg-accent-50/50 rounded-xl border border-accent-200 text-xs text-gray-700 font-quicksand focus:outline-none focus:ring-2 focus:ring-accent-300"
             />
             {searchTerm && (
               <button
@@ -126,7 +126,7 @@ export const SearchCalendarDrawer: React.FC<SearchCalendarDrawerProps> = ({
           {/* Quick Date Picker */}
           <div>
             <label className="block text-[11px] font-semibold text-gray-400 uppercase tracking-wider mb-1 flex items-center gap-1">
-              <Calendar size={12} className="text-pink-500" />
+              <Calendar size={12} className="text-accent-500" />
               Filter by Date
             </label>
             <div className="flex items-center gap-2">
@@ -134,7 +134,7 @@ export const SearchCalendarDrawer: React.FC<SearchCalendarDrawerProps> = ({
                 type="date"
                 value={dateQuery}
                 onChange={(e) => setDateQuery(e.target.value)}
-                className="flex-1 px-3 py-1.5 bg-pink-50/40 rounded-xl border border-pink-100 text-xs text-gray-700 font-quicksand focus:outline-none focus:ring-1 focus:ring-pink-300"
+                className="flex-1 px-3 py-1.5 bg-accent-50/40 rounded-xl border border-accent-200 text-xs text-gray-700 font-quicksand focus:outline-none focus:ring-1 focus:ring-accent-300"
               />
               {dateQuery && (
                 <button
@@ -150,7 +150,7 @@ export const SearchCalendarDrawer: React.FC<SearchCalendarDrawerProps> = ({
           {/* Mood Filters */}
           <div>
             <label className="block text-[11px] font-semibold text-gray-400 uppercase tracking-wider mb-1.5 flex items-center gap-1">
-              <Smile size={12} className="text-pink-500" />
+              <Smile size={12} className="text-accent-500" />
               Filter by Mood
             </label>
             <div className="flex flex-wrap gap-1.5">
@@ -163,8 +163,8 @@ export const SearchCalendarDrawer: React.FC<SearchCalendarDrawerProps> = ({
                   }}
                   className={`px-2 py-1 rounded-full text-[11px] font-quicksand flex items-center gap-1 transition-all ${
                     selectedMood === m.type
-                      ? 'bg-pink-500 text-white shadow-sm font-semibold'
-                      : 'bg-gray-100 text-gray-600 hover:bg-pink-50'
+                      ? 'bg-accent-500 text-white shadow-sm font-semibold'
+                      : 'bg-gray-100 text-gray-600 hover:bg-accent-50'
                   }`}
                 >
                   <span>{m.icon}</span>
@@ -190,7 +190,7 @@ export const SearchCalendarDrawer: React.FC<SearchCalendarDrawerProps> = ({
               <button
                 key={entry.id}
                 onClick={() => handleSelect(entry.id)}
-                className="w-full p-3 rounded-2xl bg-white hover:bg-pink-50/50 border border-pink-100 text-left transition-all hover:border-pink-300 shadow-sm flex items-center justify-between group"
+                className="w-full p-3 rounded-2xl bg-white hover:bg-accent-50/50 border border-accent-100 text-left transition-all hover:border-accent-300 shadow-sm flex items-center justify-between group"
               >
                 <div className="flex-1 min-w-0 pr-2">
                   <div className="flex items-center gap-1.5 text-xs text-gray-500 font-quicksand">
@@ -210,7 +210,7 @@ export const SearchCalendarDrawer: React.FC<SearchCalendarDrawerProps> = ({
                       {entry.tags.map((t) => (
                         <span
                           key={t}
-                          className="text-[10px] bg-pink-100 text-pink-700 px-1.5 py-0.2 rounded-md font-quicksand"
+                          className="text-[10px] bg-accent-100 text-accent-700 px-1.5 py-0.2 rounded-md font-quicksand"
                         >
                           #{t}
                         </span>
@@ -219,7 +219,7 @@ export const SearchCalendarDrawer: React.FC<SearchCalendarDrawerProps> = ({
                   )}
                 </div>
 
-                <div className="text-pink-300 group-hover:text-pink-500 group-hover:translate-x-1 transition-all">
+                <div className="text-accent-400 group-hover:text-accent-600 group-hover:translate-x-1 transition-all">
                   <ArrowRight size={16} />
                 </div>
               </button>

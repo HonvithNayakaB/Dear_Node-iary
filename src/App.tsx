@@ -18,11 +18,10 @@ import { SearchCalendarDrawer } from './components/SearchCalendarDrawer';
 import { Sparkles } from 'lucide-react';
 
 export const App: React.FC = () => {
-  // In-memory Circular Doubly Linked List instance
   const cdll = useMemo(() => new CircularDoublyLinkedList<DiaryEntry>(), []);
 
   const [currentNode, setCurrentNode] = useState<DiaryNode<DiaryEntry> | null>(null);
-  const [entriesVersion, setEntriesVersion] = useState<number>(0); // Triggers re-renders when CDLL mutates
+  const [entriesVersion, setEntriesVersion] = useState<number>(0);
   const [preferences, setPreferences] = useState<UserPreferences>({
     theme: 'sakura',
     paperStyle: 'lined',
@@ -36,12 +35,11 @@ export const App: React.FC = () => {
   const [editingEntry, setEditingEntry] = useState<DiaryEntry | null>(null);
   const [isSettingsOpen, setIsSettingsOpen] = useState<boolean>(false);
   const [isSearchOpen, setIsSearchOpen] = useState<boolean>(false);
-  const [isVisualizerOpen, setIsVisualizerOpen] = useState<boolean>(true); // Open by default for delight!
+  const [isVisualizerOpen, setIsVisualizerOpen] = useState<boolean>(true);
 
   // Circular loop notification toast
   const [loopToast, setLoopToast] = useState<string | null>(null);
 
-  // Initialize DB and load entries into CDLL
   const loadData = useCallback(async () => {
     try {
       const prefs = await getPreferencesFromDb();
@@ -52,7 +50,6 @@ export const App: React.FC = () => {
       cdll.fromArray(loadedEntries);
       setEntriesVersion((v) => v + 1);
 
-      // Default active entry to latest entry (tail) or head
       if (cdll.tail) {
         setCurrentNode(cdll.tail);
       }
@@ -70,13 +67,11 @@ export const App: React.FC = () => {
     document.body.setAttribute('data-theme', preferences.theme);
   }, [preferences.theme]);
 
-  // Navigation handlers
   const handleNext = useCallback(() => {
     if (!currentNode || cdll.isEmpty) return;
 
     soundEffects.playPageFlip();
 
-    // Check if we are wrapping around the circular linked list from Tail to Head
     if (currentNode === cdll.tail && cdll.size > 1) {
       triggerLoopToast('🌸 Looping from your newest memory back to your very first day!');
     }
@@ -89,7 +84,6 @@ export const App: React.FC = () => {
 
     soundEffects.playPageFlip();
 
-    // Check if we are wrapping backwards from Head to Tail
     if (currentNode === cdll.head && cdll.size > 1) {
       triggerLoopToast('✨ Looping from your first memory around to your latest reflection!');
     }
@@ -107,7 +101,6 @@ export const App: React.FC = () => {
   // Keyboard navigation shortcuts
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      // Don't trigger if user is typing in an input/textarea
       const tag = (e.target as HTMLElement)?.tagName?.toLowerCase();
       if (tag === 'input' || tag === 'textarea') return;
 
@@ -124,11 +117,9 @@ export const App: React.FC = () => {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [handleNext, handlePrev]);
 
-  // Save (Create or Update) Entry
   const handleSaveEntry = async (entry: DiaryEntry) => {
     const isNew = !cdll.findById(entry.id);
 
-    // Update in-memory CDLL chronologically
     let node: DiaryNode<DiaryEntry> | null;
     if (isNew) {
       node = cdll.insertChronological(entry);
@@ -136,7 +127,6 @@ export const App: React.FC = () => {
       node = cdll.updateEntry(entry.id, entry);
     }
 
-    // Persist to IndexedDB
     await saveEntryToDb(entry);
 
     setEntriesVersion((v) => v + 1);
@@ -146,12 +136,10 @@ export const App: React.FC = () => {
     setEditingEntry(null);
   };
 
-  // Delete Entry
   const handleDeleteEntry = async (id: string) => {
     const targetNode = cdll.findById(id);
     if (!targetNode) return;
 
-    // Pick next node to focus on after deletion
     const nextToFocus = targetNode.next !== targetNode ? targetNode.next : null;
 
     cdll.deleteById(id);
@@ -161,7 +149,6 @@ export const App: React.FC = () => {
     setCurrentNode(nextToFocus);
   };
 
-  // Toggle Favorite
   const handleToggleFavorite = async (id: string) => {
     const node = cdll.findById(id);
     if (!node) return;
@@ -174,7 +161,6 @@ export const App: React.FC = () => {
     setEntriesVersion((v) => v + 1);
   };
 
-  // Memory Shuffle (Time Machine)
   const handleShuffle = () => {
     if (cdll.isEmpty || !cdll.head) return;
     const all = cdll.toArray();
@@ -188,7 +174,6 @@ export const App: React.FC = () => {
     }
   };
 
-  // Quick Sound Mute Toggle
   const handleToggleSound = async () => {
     const nextState = !preferences.soundEnabled;
     const updatedPrefs = { ...preferences, soundEnabled: nextState };
@@ -200,7 +185,6 @@ export const App: React.FC = () => {
     await savePreferencesToDb(updatedPrefs);
   };
 
-  // Calculate current node index in array representation
   const currentIndex = useMemo(() => {
     if (!currentNode || cdll.isEmpty) return 0;
     const arr = cdll.toArray();
@@ -227,7 +211,7 @@ export const App: React.FC = () => {
 
       {/* Circular Wrap Toast Banner */}
       {loopToast && (
-        <div className="fixed top-20 left-1/2 -translate-x-1/2 z-40 bg-gradient-to-r from-pink-500 to-rose-400 text-white px-5 py-2.5 rounded-full shadow-xl shadow-pink-200/80 font-quicksand font-bold text-xs sm:text-sm flex items-center gap-2 animate-bounce">
+        <div className="fixed top-20 left-1/2 -translate-x-1/2 z-40 bg-gradient-to-r from-accent-500 to-accent-600 text-white px-5 py-2.5 rounded-full shadow-xl shadow-accent-200/80 font-quicksand font-bold text-xs sm:text-sm flex items-center gap-2 animate-bounce">
           <Sparkles size={16} />
           <span>{loopToast}</span>
         </div>
